@@ -1,8 +1,8 @@
 package mysql
 
 import (
-	"fajar/project/config"
-	user "fajar/project/features/user/repository"
+	"be13/project/config"
+	user "be13/project/features/user/repository"
 	"fmt"
 	"log"
 
