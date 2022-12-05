@@ -109,8 +109,6 @@ paths:
         - Users
       summary: get all users
       description: Melihat seluruh data user
-      security:
-        - JWTAuth: []
       parameters:
         - name: name
           description: "nama user"
