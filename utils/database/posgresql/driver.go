@@ -1,10 +1,5 @@
 package posgresql
 
-// import (
-// 	"14-api-clean-arch/config"
-// 	"fmt"
-// 	"log"
-
 // 	"gorm.io/driver/mysql"
 // 	"gorm.io/gorm"
 // )
