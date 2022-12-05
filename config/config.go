@@ -58,7 +58,7 @@ func initConfig() *AppConfig {
 		return nil
 	}
 	defaultConfig.DB_PORT = uint(cnvDBPort)
-	defaultConfig.JWT_SECRET = os.Getenv("JWT_SECRET")
+	// defaultConfig.JWT_SECRET = os.Getenv("JWT_SECRET")
 
 	return &defaultConfig
 }

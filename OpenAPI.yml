@@ -53,14 +53,193 @@ paths:
                   message: "Login berhasil"
                   data:
                       id: 1
-                      email: "budi@mail.com"
+                      email: "teguh@mail.com"
                       token:  "afkdnnifnnj&h3"
                       role: "Admin"
         '404' :
           $ref: '#/components/responses/404'
 
+  /users:
+    post:
+      tags:
+        - Users
+      summary: add user
+      description: Menambah data User (register)
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                full_name: "budi prakoso"
+                email: "budi@mail.com"
+                team: "be"
+                password: "qwerty"
+                phone_number: "0822349"
+                address: "surabaya"
+                status: "active"
+                role: "admin"
+      responses:
+        '201':
+          description: Register berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "register berhasil"
+        '400':
+          description: Register gagal.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "failed"
+                  message: "register gagal. semua field wajib diisi"
+        '500':
+          $ref: '#/components/responses/500'
+    
+    get:
+      tags:
+        - Users
+      summary: get all users
+      description: Melihat seluruh data user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budi"
 
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get all users"
+                  data:
+                    - id: 1
+                      name: "budi"
+                      email: "budi@mail.com"
+                      address: "surabaya"
+                    - id: 2
+                      name: "rudi"
+                      email: "rudi@mail.com"
+                      address: "surabaya"
+        '404':
+          $ref: '#/components/responses/404'
+  /users/{id_user}:
+    put:
+      tags:
+        - Users
+      summary: update users
+      description: Melihat seluruh data user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_user
+          description: "id user"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                full_name: "budi anggora"
+                email: "anggora@mail.com"
+                team: "fe"
+                password: "12345"
+                phone_number: "0822349"
+                address: "surabaya"
+                status: "active"
+                role: "admin"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success delete users"
+                  data: 
+                    full_name: "budi prakoso"
+                    email: "budi@mail.com"
+                    team: "be"
+                    password: "qwerty"
+                    phone_number: "0822349"
+                    address: "surabaya"
+                    status: "active"
+                    role: "admin"
+        '404':
+          $ref: '#/components/responses/404'
 
+###########################################################
+  /mantee:
+    post:
+      tags:
+        - Mantee
+      summary: add Mantee
+      description: Menambah data mantee (register)
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                full_name: "budi prakoso"
+                email: "budi@mail.com"
+                team: "be"
+                password: "qwerty"
+                phone_number: "0822349"
+                address: "surabaya"
+                status: "active"
+                role: "admin"
+                
+      responses:
+        '201':
+          description: Register berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "register berhasil"
+        '400':
+          description: Register gagal.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "failed"
+                  message: "register gagal. semua field wajib diisi"
+        '500':
+          $ref: '#/components/responses/500'
 ####################################
 #  COMPONENTS
 ####################################
