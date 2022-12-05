@@ -1,4 +1,4 @@
-module fajar/project
+module be13/project
 
 go 1.19
 

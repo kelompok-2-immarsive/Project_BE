@@ -15,7 +15,7 @@ type AppConfig struct {
 	DB_PORT     uint
 	DB_NAME     string
 	SERVER_PORT uint
-	JWT_SECRET  string
+	// JWT_SECRET  string
 }
 
 var lock = &sync.Mutex{}
