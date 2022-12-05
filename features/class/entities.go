@@ -4,14 +4,14 @@ import "time"
 
 type Core struct {
 	ID        uint
-	ClassName string
-	UserID    uint `validate:"required"`
+	ClassName string `validate:"required"`
+	UserID    uint   `validate:"required"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
 type ServiceInterface interface {
-	GetClass() (data []Core, err error)
+	GetAllClass() (data []Core, err error)
 	AddClass(input Core) error
 	GetClassbyId(name string) (Core, error)
 	DeleteClass(id int) error
@@ -19,7 +19,7 @@ type ServiceInterface interface {
 }
 
 type RepositoryInterface interface {
-	GetClass() (data []Core, err error)
+	GetAllClass() (data []Core, err error)
 	AddClass(input Core) error
 	GetClassbyId(name string) (Core, error)
 	DeleteClass(id int) error

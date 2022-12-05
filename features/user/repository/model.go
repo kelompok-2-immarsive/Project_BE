@@ -1,6 +1,10 @@
 package repository
 
-import "gorm.io/gorm"
+import (
+	"be13/project/features/class/repository"
+
+	"gorm.io/gorm"
+)
 
 type User struct {
 	gorm.Model
@@ -10,4 +14,5 @@ type User struct {
 	Phone    string
 	Address  string
 	Role     string
+	Classes  []repository.Class
 }
