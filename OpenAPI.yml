@@ -146,7 +146,7 @@ paths:
       tags:
         - Users
       summary: update users
-      description: Melihat seluruh data user
+      description: Mengubah data User
       security:
         - JWTAuth: []
       parameters:
@@ -181,7 +181,7 @@ paths:
                 type: object
                 example:
                   status: "success"
-                  message: "success delete users"
+                  message: "success Update users"
                   data: 
                     full_name: "budi prakoso"
                     email: "budi@mail.com"
@@ -193,6 +193,40 @@ paths:
                     role: "admin"
         '404':
           $ref: '#/components/responses/404'
+    delete:
+      tags:
+        - Users
+      summary: Delete Users
+      description: menghapus akun user
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: "id_user"
+          description: "id_user"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '201':
+          description: Delete berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "Delete success"
+                  data:
+                    name: iswanul
+                    email:  iswanul@mail.com
+                    team: academic
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    
 
 ###########################################################
   /mantee:
@@ -210,14 +244,21 @@ paths:
             schema:
               type: object
               example:
-                full_name: "budi prakoso"
-                email: "budi@mail.com"
-                team: "be"
-                password: "qwerty"
-                phone_number: "0822349"
-                address: "surabaya"
-                status: "active"
-                role: "admin"
+                  name: "sari"
+                  class: "be13"
+                  address: "surabaya"
+                  home_address: "surabaya"
+                  email: "sari@gmail.com"
+                  gender : "female" 
+                  telegram: "08123"
+                  phone:  "08123"
+                  mantee_status:  "active"
+                  emergency_phone:  "0888"
+                  emergency_name: "bagus"       
+                  emergency_relation: "saudara"
+                  category: "non-informatics"
+                  major:  "civil engineer"
+                  graduate: "2020"
                 
       responses:
         '201':
@@ -240,6 +281,520 @@ paths:
                   message: "register gagal. semua field wajib diisi"
         '500':
           $ref: '#/components/responses/500'
+    get:
+      tags:
+        - Mantee
+      summary: Get Mantee
+      description: Melihat data Mantee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: Name
+          description: "Mantee name"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budi"
+        - name: class
+          description: "Mantee class"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "BE 13"
+        - name: status
+          description: "Mantee Status"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "Active"
+        - in: query
+          name: Category
+          description: Mantee's Backgorund
+          schema:
+            type: string
+            enum: [Informatics,non-Informatics]
+
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get mantee"
+                  data:
+                    - id: 1
+                      name: "sari"
+                      class: "be13"
+                      address: "surabaya"
+                      home_address: "surabaya"
+                      email: "sari@gmail.com"
+                      gender : "female" 
+                      telegram: "08123"
+                      phone:  "08123"
+                      mantee_status:  "active"
+                      emergency_phone:  "0888"
+                      emergency_name: "bagus"       
+                      emergency_relation: "saudara"
+                      category: "non-informatics"
+                      major:  "civil engineer"
+                      graduate: "2020"
+                      
+                    
+                    - id: 2
+                      name: "budi"
+                      class: "be14"
+                      address: "surabaya"
+                      home_address: "surabaya"
+                      email:  "budi@mail..com"
+                      gender :  "male"
+                      telegram: "09882"
+                      phone:  "09882"
+                      mantee_status:  "active"
+                      emergency_phone:  "01234"
+                      emergency_name:   "bambang"       
+                      emergency_relation: "orangtua" 
+                      category: "informatics"
+                      major: "it"
+                      graduate: "2022"
+        '404':
+          $ref: '#/components/responses/404'   
+  /mantee/{id_mantee}:
+    put:
+      tags:
+        - Mantee
+      summary: update mantee
+      description: Mengubah data Mantee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_mantee
+          description: "id mantee"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                full_name: "budi anggora"
+                class: "be14"
+                status: "active"
+                category: "informatics"
+                gender: "male"
+                
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success Update mantee data"
+                  data: 
+                    full_name: "budi anggora"
+                    class: "be14"
+                    status: "active"
+                    category: "informatics"
+                    gender: "male"
+        '404':
+          $ref: '#/components/responses/404'
+
+    delete:
+      tags:
+        - Mantee
+      summary: Delete mantee
+      description: menghapus akun mantee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: "id_mantee"
+          description: "id_mantee"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '201':
+          description: Delete berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "Delete success"
+                  data:
+                    name: iswanul
+                    class: "back-end 12"
+                    category: "informatics"
+                    gender: "female"
+                    
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  /mantee/{id_mantee}/feedback:
+    get:
+      tags:
+        - Mantee
+      summary: get feedback of specific mantee
+      description: Melihat semua feedback yang dituju ke seorang mantee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_mantee
+          description: "id mantee"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+    
+
+      responses:
+        '200':
+          description: mantee data
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get all users"
+                  data:
+                    id: 1
+                    name: "sari"
+                    class: "be13"
+                    address: "surabaya"
+                    home_address: "surabaya"
+                    email: "sari@gmail.com"
+                    gender : "female" 
+                    telegram: "08123"
+                    phone:  "08123"
+                    mantee_status:  "active"
+                    emergency_phone:  "0888"
+                    emergency_name: "bagus"       
+                    emergency_relation: "saudara"
+                    category: "non-informatics"
+                    major:  "civil engineer"
+                    graduate: "2020"
+                  feedback:
+                    - id_user: 1
+                      status: "join class"
+                      notes: "Ini bagian notes untuk mentee yang bersangkutan 1"
+                      created_at: 2022:22:12
+                    - id_user: 2
+                      status: "continue srction 2"
+                      notes: "Ini bagian notes untuk mentee yang bersangkutan 2"
+                      created_at: 2022:22:12
+                 
+        '404':
+          $ref: '#/components/responses/404'  
+######################################################################################
+
+  /feedback/:
+    post:
+      tags:
+        - FeedBack
+      summary: Post Feedback
+      description: memberi komentar ke Mantee
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_user: 1
+                status: "join class"
+                notes: "isi notes/komentar"
+                id_mantee:  2
+                
+      responses:
+        '200':
+          description: mantee notes
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success add notes"
+                  data:
+                    id : 1 
+                    id_user: 1
+                    status: "join class"
+                    notes: "isi notes/komentar"
+                    id_mantee:  2
+                    created_at: 2020:12:12
+        '404':
+          $ref: '#/components/responses/404'
+        '500' :
+          $ref: '#/components/responses/500'
+  /feedback/{id_feedback}:
+    put:
+      tags:
+        - FeedBack
+      summary: Post Feedback
+      description: mengedit komentar ke Mantee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_feedback
+          description: "id feedback"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_user: 1
+                status: "join class"
+                notes: "isi notes/komentar"
+                id_mantee:  2
+                
+      responses:
+        '200':
+          description: mantee notes
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success add notes"
+                  data:
+                    id : 1 
+                    id_user: 1
+                    status: "join class"
+                    notes: "isi notes/komentar"
+                    id_mantee:  2
+                    created_at: 2022:22:12
+                    updated_at: 2022:22:13
+        '404':
+          $ref: '#/components/responses/404'
+        '500' :
+          $ref: '#/components/responses/500'
+
+    delete:
+      tags:
+        - FeedBack
+      summary: Delete Feedback
+      description: menghapus feedback
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_feedback
+          description: "id_feedback"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '201':
+          description: Delete berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "Delete feedback success"
+                  
+                    
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+####################################################################
+  /class/:
+    post:
+      tags:
+        - Class
+      summary: Create Class
+      description: membuat kelas baru
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nama_kelas: "back-end batch 13"
+                id_user: 1
+                
+      responses:
+        '200':
+          description: create class
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success add class"
+                  data:
+                    id : 1 
+                    id_user: 1
+                    nama_kelas: "back-end batch 13"
+                    created_at: 2022:11:11
+                    updated_at: 2022:11:11
+                    
+        '404':
+          $ref: '#/components/responses/404'
+        '500' :
+          $ref: '#/components/responses/500'
+
+    get:
+      tags:
+        - Class
+      summary: Get Class
+      description: Melihat data kelas
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: class_name
+          description: "Class name"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "back-end batch 13"
+
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get mantee"
+                  data:
+                    - id : 1 
+                      id_user: 2
+                      nama_kelas: "back-end batch 13"
+                      created_at: 2022:11:11
+                      updated_at: 2022:11:12
+                      
+                    
+                    - id : 2 
+                      id_user: 3
+                      nama_kelas: "back-end batch 14"
+                      created_at: 2022:11:11
+                      updated_at: 2022:11:12
+        '404':
+          $ref: '#/components/responses/404'  
+  /class/{id_class}:
+    put:
+      tags:
+        - Class
+      summary: Update Class data
+      description: mengedit data kelas
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: "id_class"
+          description: "id_class"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                nama_kelas: "back-end batch 13"
+                id_user: 2
+                
+      responses:
+        '200':
+          description: mantee notes
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success add notes"
+                  data:
+                    id : 1 
+                    id_user: 2
+                    nama_kelas: "back-end batch 13"
+                    created_at: 2022:11:11
+                    updated_at: 2022:11:12
+        '404':
+          $ref: '#/components/responses/404'
+        '500' :
+          $ref: '#/components/responses/500'
+    delete:
+      tags:
+        - Class
+      summary: Delete Class
+      description: menghapus Kelas
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: "id_class"
+          description: "id_class"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '201':
+          description: Delete berhasil.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "Delete success"
+                  data:
+                    nama_kelas: "back-end batch 13"
+                    id_user:  "1"
+                    
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'  
+ 
+
+
+    
 ####################################
 #  COMPONENTS
 ####################################
