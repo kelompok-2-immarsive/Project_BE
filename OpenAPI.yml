@@ -227,7 +227,7 @@ paths:
     
 
 ###########################################################
-  /mantee:
+  /mantees:
     post:
       tags:
         - Mantee
@@ -362,7 +362,7 @@ paths:
                       graduate: "2022"
         '404':
           $ref: '#/components/responses/404'   
-  /mantee/{id_mantee}:
+  /mantees/{id_mantee}:
     put:
       tags:
         - Mantee
@@ -445,7 +445,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /mantee/{id_mantee}/feedback:
+  /mantees/{id_mantee}/feedback:
     get:
       tags:
         - Mantee
@@ -504,7 +504,7 @@ paths:
           $ref: '#/components/responses/404'  
 ######################################################################################
 
-  /feedback/:
+  /feedbacks/:
     post:
       tags:
         - FeedBack
@@ -545,7 +545,7 @@ paths:
           $ref: '#/components/responses/404'
         '500' :
           $ref: '#/components/responses/500'
-  /feedback/{id_feedback}:
+  /feedbacks/{id_feedback}:
     put:
       tags:
         - FeedBack
@@ -629,7 +629,7 @@ paths:
           $ref: '#/components/responses/500'
 
 ####################################################################
-  /class/:
+  /classes/:
     post:
       tags:
         - Class
@@ -710,7 +710,7 @@ paths:
                       updated_at: 2022:11:12
         '404':
           $ref: '#/components/responses/404'  
-  /class/{id_class}:
+  /classes/{id_class}:
     put:
       tags:
         - Class
