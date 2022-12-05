@@ -1,10 +1,13 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"sync"
+
+	"github.com/joho/godotenv"
 )
 
 type AppConfig struct {
@@ -35,14 +38,15 @@ func GetConfig() *AppConfig {
 func initConfig() *AppConfig {
 	var defaultConfig AppConfig
 
-	// if _, exist := os.LookupEnv("SECRET"); !exist {
-	// 	if err := godotenv.Load(".env"); err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// }
+	if _, exist := os.LookupEnv("SECRET"); !exist {
+		if err := godotenv.Load(".env"); err != nil {
+			log.Println(err)
+		}
+	}
 
 	// SECRET = os.Getenv("SECRET")
 	cnvServerPort, err := strconv.Atoi(os.Getenv("SERVER_PORT"))
+	fmt.Println("ini port", cnvServerPort)
 	if err != nil {
 		log.Fatal("Cannot parse Server Port variable")
 		return nil
@@ -59,6 +63,15 @@ func initConfig() *AppConfig {
 	}
 	defaultConfig.DB_PORT = uint(cnvDBPort)
 	defaultConfig.JWT_SECRET = os.Getenv("JWT_SECRET")
+
+	log.Println(` Env List :
+	 - server port : `, defaultConfig.SERVER_PORT,
+		` \n - db name : `, defaultConfig.DB_NAME,
+		` \n - db username : `, defaultConfig.DB_USERNAME,
+		` \n - db password : `, defaultConfig.DB_PASSWORD,
+		` \n - db host : `, defaultConfig.DB_HOST,
+		` \n - db port : `, defaultConfig.DB_PORT,
+		` \n - jwt secret : `, defaultConfig.JWT_SECRET)
 
 	return &defaultConfig
 }
