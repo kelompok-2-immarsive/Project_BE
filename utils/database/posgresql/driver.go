@@ -1,7 +1,7 @@
 package posgresql
 
 import (
-	"14-api-clean-arch/config"
+	"be13/project/config"
 	"fmt"
 	"log"
 

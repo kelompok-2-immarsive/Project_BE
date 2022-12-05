@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"be13/project/config"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -10,9 +11,9 @@ import (
 
 var key string
 
-// func InitJWT(c *config.AppConfig) {
-// 	key = c.JWT_SECRET
-// }
+func InitJWT(c *config.AppConfig) {
+	key = c.JWT_SECRET
+}
 
 func JWTMiddleware() echo.MiddlewareFunc {
 	return middleware.JWTWithConfig(middleware.JWTConfig{
