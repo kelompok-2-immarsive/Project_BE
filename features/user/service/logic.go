@@ -2,13 +2,9 @@ package service
 
 import (
 	"be13/project/features/user"
-	"be13/project/middlewares"
 	"errors"
-	"strings"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/labstack/gommon/log"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // bisnis Logic
@@ -42,40 +38,41 @@ func (service *UserService) Create(input user.CoreUser) (err error) {
 
 	return nil
 }
-func (service *UserService) Login(input user.CoreUser) (token string, err error) {
-	if errValidate := service.validate.Struct(input); errValidate != nil {
-		log.Error(errValidate.Error())
-		return "", errors.New("Failed to Login. Error validate input. Please check your input.")
-	}
 
-	result, errLogin := service.userRepository.FindUser(input.Email)
-	if errLogin != nil {
-		log.Error(errLogin.Error())
-		if strings.Contains(errLogin.Error(), "table") {
-			return "", errors.New("Failed to Login. Error on request. Please contact your administrator.")
-		} else if strings.Contains(errLogin.Error(), "found") {
-			return "", errors.New("Failed to Login. Email not found. Please check password again.")
-		} else {
-			return "", errors.New("Failed to Login. Other Error. Please contact your administrator.")
-		}
-	}
+// func (service *UserService) Login(input user.CoreUser) (token string, err error) {
+// 	if errValidate := service.validate.Struct(input); errValidate != nil {
+// 		log.Error(errValidate.Error())
+// 		return "", errors.New("Failed to Login. Error validate input. Please check your input.")
+// 	}
 
-	errCheckPass := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(input.Password))
-	// fmt.Println("Data Core = ", dataCore, "\n\n\n")
-	// fmt.Println("Result = ", result, "\n\n\n")
-	if errCheckPass != nil {
-		log.Error(errCheckPass.Error())
-		return "", errors.New("Failed to Login. Password didn't match. Please check password again.")
-	}
+// 	result, errLogin := service.userRepository.FindUser(input.Email)
+// 	if errLogin != nil {
+// 		log.Error(errLogin.Error())
+// 		if strings.Contains(errLogin.Error(), "table") {
+// 			return "", errors.New("Failed to Login. Error on request. Please contact your administrator.")
+// 		} else if strings.Contains(errLogin.Error(), "found") {
+// 			return "", errors.New("Failed to Login. Email not found. Please check password again.")
+// 		} else {
+// 			return "", errors.New("Failed to Login. Other Error. Please contact your administrator.")
+// 		}
+// 	}
 
-	token, errToken := middlewares.CreateToken(int(result.ID), result.Role)
-	if errToken != nil {
-		log.Error(errToken.Error())
-		return "", errors.New("Failed to login. Error on generate token. Please check password again.")
-	}
+// 	errCheckPass := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(input.Password))
+// 	// fmt.Println("Data Core = ", dataCore, "\n\n\n")
+// 	// fmt.Println("Result = ", result, "\n\n\n")
+// 	if errCheckPass != nil {
+// 		log.Error(errCheckPass.Error())
+// 		return "", errors.New("Failed to Login. Password didn't match. Please check password again.")
+// 	}
 
-	return token, nil
-}
+// 	token, errToken := middlewares.CreateToken(int(result.ID), result.Role)
+// 	if errToken != nil {
+// 		log.Error(errToken.Error())
+// 		return "", errors.New("Failed to login. Error on generate token. Please check password again.")
+// 	}
+
+// 	return token, nil
+// }
 
 // DeleteById implements user.ServiceEntities
 // func (*UserService) DeleteById(id int) error {
