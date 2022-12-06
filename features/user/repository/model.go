@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"be13/project/features/class/repository"
 	"be13/project/features/user"
 	_user "be13/project/features/user"
 
@@ -16,7 +17,7 @@ type User struct {
 	Address  string
 	Status   string
 	Role     string
-	// Classes  []repository.Class
+	Classes  []repository.Class
 }
 
 func FromUserCore(dataCore _user.CoreUser) User { //fungsi yang mengambil data dari entities usercore dan merubah data ke user gorm(model.go)
