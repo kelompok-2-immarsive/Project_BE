@@ -1,6 +1,9 @@
 package factory
 
 import (
+	deliveryAuth "be13/project/features/auth/delivery"
+	repoAuth "be13/project/features/auth/repository"
+	serviceAuth "be13/project/features/auth/service"
 	deliveryClass "be13/project/features/class/delivery"
 	repoClass "be13/project/features/class/repository"
 	serviceClass "be13/project/features/class/service"
@@ -20,4 +23,9 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	classRepoFactory := repoClass.NewClass(db)
 	classServiceFactory := serviceClass.NewClass(classRepoFactory)
 	deliveryClass.NewClass(classServiceFactory, e)
+
+	authRepoFactory := repoAuth.NewAuth(db)
+	authServiceFactory := serviceAuth.NewAuth(authRepoFactory)
+	deliveryAuth.NewAuth(authServiceFactory, e)
+
 }
