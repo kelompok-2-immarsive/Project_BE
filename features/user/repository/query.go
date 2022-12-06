@@ -11,6 +11,10 @@ type userRepository struct {
 	db *gorm.DB
 }
 
+// FindUser implements user.RepositoryEntities
+
+// FindUser implements user.RepositoryEntities
+
 func New(db *gorm.DB) user.RepositoryEntities { // user.repository mengimplementasikan interface repository yang ada di entities
 	return &userRepository{
 		db: db,
@@ -31,6 +35,21 @@ func (repo *userRepository) Create(input user.CoreUser) (row int, err error) {
 		return 0, errors.New("Insert failed")
 	}
 	return int(tx.RowsAffected), nil
+}
+func (repo *userRepository) FindUser(email string) (result user.CoreUser, err error) {
+	var userData User
+	tx := repo.db.Where("email = ?", email).First(&userData)
+	if tx.Error != nil {
+		return user.CoreUser{}, tx.Error
+	}
+
+	if tx.RowsAffected == 0 {
+		return user.CoreUser{}, errors.New("login failed")
+	}
+
+	result = userData.toCore()
+
+	return result, nil
 }
 
 // DeleteById implements user.RepositoryEntities
