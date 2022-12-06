@@ -2,7 +2,6 @@ package repository
 
 import (
 	"be13/project/features/class/repository"
-
 	_user "be13/project/features/user"
 
 	"gorm.io/gorm"
