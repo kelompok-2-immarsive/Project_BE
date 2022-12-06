@@ -40,7 +40,7 @@ func (repo *userRepository) Create(input user.CoreUser) (row int, err error) {
 }
 func (repo *userRepository) GetAll() (data []user.CoreUser, err error) {
 	var users []User //mengambil data gorm model(model.go)
-	tx := repo.db.Find(&users)
+	tx := repo.db.Unscoped().Find(&users)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
