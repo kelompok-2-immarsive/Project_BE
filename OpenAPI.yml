@@ -17,7 +17,7 @@ tags:
     description: "authentication"
   - name: Users
     description: "Manajemen data user"
-  - name: Mantee
+  - name: Mentee
     description: "Manajemen data Mantee"
   - name: FeedBack
     description: "Manajemen FeedBack"
@@ -109,14 +109,6 @@ paths:
         - Users
       summary: get all users
       description: Melihat seluruh data user
-      parameters:
-        - name: name
-          description: "nama user"
-          required: false
-          in: query
-          schema:
-            type: string
-            example: "budi"
 
       responses:
         '200':
@@ -137,6 +129,39 @@ paths:
                       name: "rudi"
                       email: "rudi@mail.com"
                       address: "surabaya"
+        '404':
+          $ref: '#/components/responses/404'
+  /users/:
+    get:
+      tags:
+        - Users
+      summary: get users by name
+      description: Mencari User dengan nama
+      parameters:
+        - name: name
+          description: "nama user"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budi"
+
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get all users"
+                  data:
+                    id: 1
+                    name: "budi"
+                    email: "budi@mail.com"
+                    address: "surabaya"
+                    
         '404':
           $ref: '#/components/responses/404'
   /users/{id_user}:
@@ -227,10 +252,10 @@ paths:
     
 
 ###########################################################
-  /mantees:
+  /mentees:
     post:
       tags:
-        - Mantee
+        - Mentee
       summary: add Mantee
       description: Menambah data mantee (register)
       security:
@@ -281,39 +306,12 @@ paths:
           $ref: '#/components/responses/500'
     get:
       tags:
-        - Mantee
+        - Mentee
       summary: Get Mantee
       description: Melihat data Mantee
       security:
         - JWTAuth: []
-      parameters:
-        - name: Name
-          description: "Mantee name"
-          required: false
-          in: query
-          schema:
-            type: string
-            example: "budi"
-        - name: class
-          description: "Mantee class"
-          required: false
-          in: query
-          schema:
-            type: string
-            example: "BE 13"
-        - name: status
-          description: "Mantee Status"
-          required: false
-          in: query
-          schema:
-            type: string
-            example: "Active"
-        - in: query
-          name: Category
-          description: Mantee's Backgorund
-          schema:
-            type: string
-            enum: [Informatics,non-Informatics]
+      
 
       responses:
         '200':
@@ -362,10 +360,77 @@ paths:
                       graduate: "2022"
         '404':
           $ref: '#/components/responses/404'   
-  /mantees/{id_mantee}:
+  /mentees/:
+    get:
+      tags:
+        - Mentee
+      summary: Get Mantee by name,class,status,category
+      description: Mencari data mentee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: Name
+          description: "Mantee name"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "budi"
+        - name: class
+          description: "Mantee class"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "BE 13"
+        - name: status
+          description: "Mantee Status"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "Active"
+        - in: query
+          name: Category
+          description: Mantee's Backgorund
+          schema:
+            type: string
+            enum: [Informatics,non-Informatics]
+
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get mantee"
+                  data:
+                    id: 1
+                    name: "sari"
+                    class: "be13"
+                    address: "surabaya"
+                    home_address: "surabaya"
+                    email: "sari@gmail.com"
+                    gender : "female" 
+                    telegram: "08123"
+                    phone:  "08123"
+                    mantee_status:  "active"
+                    emergency_phone:  "0888"
+                    emergency_name: "bagus"       
+                    emergency_relation: "saudara"
+                    category: "non-informatics"
+                    major:  "civil engineer"
+                    graduate: "2020"
+
+        '404':
+          $ref: '#/components/responses/404' 
+  /mentees/{id_mantee}:
     put:
       tags:
-        - Mantee
+        - Mentee
       summary: update mantee
       description: Mengubah data Mantee
       security:
@@ -412,7 +477,7 @@ paths:
 
     delete:
       tags:
-        - Mantee
+        - Mentee
       summary: Delete mantee
       description: menghapus akun mantee
       security:
@@ -445,10 +510,10 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /mantees/{id_mantee}/feedback:
+  /mentees/{id_mantee}/feedback:
     get:
       tags:
-        - Mantee
+        - Mentee
       summary: get feedback of specific mantee
       description: Melihat semua feedback yang dituju ke seorang mantee
       security:
@@ -504,7 +569,7 @@ paths:
           $ref: '#/components/responses/404'  
 ######################################################################################
 
-  /feedbacks/:
+  /feedbacks:
     post:
       tags:
         - FeedBack
@@ -629,7 +694,7 @@ paths:
           $ref: '#/components/responses/500'
 
 ####################################################################
-  /classes/:
+  /classes:
     post:
       tags:
         - Class
@@ -676,14 +741,7 @@ paths:
       description: Melihat data kelas
       security:
         - JWTAuth: []
-      parameters:
-        - name: class_name
-          description: "Class name"
-          required: false
-          in: query
-          schema:
-            type: string
-            example: "back-end batch 13"
+
 
       responses:
         '200':
@@ -708,6 +766,43 @@ paths:
                       nama_kelas: "back-end batch 14"
                       created_at: 2022:11:11
                       updated_at: 2022:11:12
+        '404':
+          $ref: '#/components/responses/404'  
+  /classes/:
+    get:
+      tags:
+        - Class
+      summary: Get Class by Name
+      description: Mencari data kelas dengan nama
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: class_name
+          description: "Class name"
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "back-end batch 13"
+
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get mantee"
+                  data:
+                    id : 1 
+                    id_user: 2
+                    nama_kelas: "back-end batch 13"
+                    created_at: 2022:11:11
+                    updated_at: 2022:11:12
+                      
+                  
         '404':
           $ref: '#/components/responses/404'  
   /classes/{id_class}:
