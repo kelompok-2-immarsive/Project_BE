@@ -31,8 +31,23 @@ func (repo *classRepository) AddClass(input class.Core) error {
 }
 
 // DeleteClass implements class.RepositoryInterface
-func (*classRepository) DeleteClass(id int) error {
-	panic("unimplemented")
+func (repo *classRepository) DeleteClass(id int) (class.Core, error) {
+	classes := Class{}
+	tx := repo.db.Delete(&classes, id)
+	if tx.Error != nil {
+		return class.Core{}, tx.Error
+	}
+
+	tx1 := repo.db.Unscoped().Where("id=?", id).Find(&classes)
+	if tx1.Error != nil {
+		return class.Core{}, tx1.Error
+	}
+	if tx.RowsAffected == 0 {
+		return class.Core{}, errors.New("id not found")
+
+	}
+	result := classes.ModeltoCore()
+	return result, nil
 }
 
 // GetAllClass implements class.RepositoryInterface
@@ -49,15 +64,27 @@ func (repo *classRepository) GetAllClass() (data []class.Core, err error) {
 // GetClassbyId implements class.RepositoryInterface
 func (repo *classRepository) GetClassbyId(name string) (class.Core, error) {
 	classes := Class{}
-	tx := repo.db.Where("name", name).Find(&classes)
+	tx := repo.db.Where("class_name", name).Find(&classes)
 	if tx.Error != nil {
 		return class.Core{}, tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return class.Core{}, errors.New("id not found")
+
 	}
 	result := classes.ModeltoCore()
 	return result, nil
 }
 
 // UpdateClass implements class.RepositoryInterface
-func (*classRepository) UpdateClass(id int, input class.Core) error {
-	panic("unimplemented")
+func (repo *classRepository) UpdateClass(id int, input class.Core) error {
+	class := CoretoModel(input)
+	tx := repo.db.Model(class).Where("id = ?", id).Updates(class)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return errors.New("id not found")
+	}
+	return nil
 }
