@@ -2,6 +2,7 @@ package mysql
 
 import (
 	"be13/project/config"
+	class "be13/project/features/class/repository"
 	user "be13/project/features/user/repository"
 	"fmt"
 	"log"
@@ -17,11 +18,12 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 		log.Fatal("Cannot connect to DB")
 	}
 
-	migrateDB(db)
+	MigrateDB(db)
 
 	return db
 }
 
-func migrateDB(db *gorm.DB) {
+func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&user.User{})
+	db.AutoMigrate(&class.Class{})
 }

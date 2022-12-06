@@ -29,8 +29,9 @@ func (service *classService) AddClass(input class.Core) error {
 }
 
 // DeleteClass implements class.ServiceInterface
-func (*classService) DeleteClass(id int) error {
-	panic("unimplemented")
+func (service *classService) DeleteClass(id int) (class.Core, error) {
+	data, err := service.classRepository.DeleteClass(id)
+	return data, err
 }
 
 // GetAllClass implements class.ServiceInterface
@@ -49,6 +50,10 @@ func (service *classService) GetClassbyId(name string) (class.Core, error) {
 }
 
 // UpdateClass implements class.ServiceInterface
-func (*classService) UpdateClass(id int, input class.Core) error {
-	panic("unimplemented")
+func (service *classService) UpdateClass(id int, input class.Core) error {
+	err := service.classRepository.UpdateClass(id, input)
+	if err != nil {
+		return errors.New("id not found")
+	}
+	return nil
 }
