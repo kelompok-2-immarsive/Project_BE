@@ -23,7 +23,7 @@ func New(Service user.ServiceEntities, e *echo.Echo) {
 	// e.GET("/user", handler.GetAll) // memanggil func getall
 	e.POST("/user", handler.Create)
 	e.GET("/user", handler.GetAll, middlewares.JWTMiddleware())
-	e.PUT("/user/:id", handler.Update, middlewares.JWTMiddleware())
+	e.PUT("/user/:id", handler.Update)
 	// e.POST("/auth", handler.Login)
 	// e.PUT("/user/:id", handler.Update)
 	// e.GET("/user/:id", handler.GetById)
