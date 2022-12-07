@@ -18,7 +18,7 @@ func NewMentee(service mentee.ServiceInterface, e *echo.Echo) {
 		menteeServices: service,
 	}
 
-	e.POST("/mentee", handler.AddMentee)
+	e.POST("/mentees", handler.AddMentee)
 	e.GET("/mentees", handler.GetAllmentee)
 	e.GET("/mentee", handler.GetMentebyParam)
 	e.PUT("/mentees/:id", handler.UpdateMentee)
@@ -27,6 +27,8 @@ func NewMentee(service mentee.ServiceInterface, e *echo.Echo) {
 }
 
 func (delivery *MenteeDelivery) GetAllmentee(c echo.Context) error {
+
+	// name := c.QueryParam("name")
 	result, err := delivery.menteeServices.GetAllmentee()
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Data Users is empty"))
@@ -47,17 +49,14 @@ func (delivery *MenteeDelivery) GetMentebyParam(c echo.Context) error {
 	status := c.QueryParam("status")
 	category := c.QueryParam("category")
 	class := c.QueryParam("class")
-	classId, errconv := strconv.Atoi(class)
-	if errconv != nil {
-		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error Convert"))
-	}
+	classId, _ := strconv.Atoi(class)
 
 	userId, err := delivery.menteeServices.GetMentebyParam(name, status, category, uint(classId))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Id not Found"))
 	}
 
-	result := coreToResponse(userId)
+	result := responseList(userId)
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("Success Get mentee", result))
 
 }

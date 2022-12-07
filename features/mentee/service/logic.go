@@ -41,7 +41,7 @@ func (service *menteeService) GetAllmentee() (data []mentee.Core, err error) {
 }
 
 // GetMentebyParam implements mentee.ServiceInterface
-func (service *menteeService) GetMentebyParam(name string, status string, category string, class uint) (mentee.Core, error) {
+func (service *menteeService) GetMentebyParam(name string, status string, category string, class uint) ([]mentee.Core, error) {
 	data, err := service.menteeRepository.GetMentebyParam(name, status, category, class)
 	return data, err
 }
