@@ -22,3 +22,5 @@ func main() {
 	e.Use(middleware.CORS())
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", cfg.SERVER_PORT)))
 }
+
+// ?xbEyTu2
