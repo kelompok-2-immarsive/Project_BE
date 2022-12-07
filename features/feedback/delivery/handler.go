@@ -2,6 +2,16 @@ package delivery
 
 import (
 	"be13/project/features/feedback"
+<<<<<<< HEAD
+=======
+
+	"github.com/Labstack/echo"
+)
+
+// type FeedbackDelivery struct {
+// 	feedbackServices feedback.ServiceInterface
+// }
+>>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
 
 	"github.com/Labstack/echo"
 )
