@@ -3,6 +3,7 @@ package repository
 import (
 	"be13/project/features/user"
 	"errors"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -50,14 +51,25 @@ func (repo *userRepository) GetAll() (data []user.CoreUser, err error) {
 	return DataCore, nil
 
 }
+func (repo *userRepository) Update(id int, input user.CoreUser) error {
+	userGorm := FromUserCore(input)
+
+	if userGorm.UpdatedAt != (time.Time{}) {
+		userGorm.Status = "Active"
+	} else {
+		userGorm.Status = "Not-Active"
+	}
+	tx := repo.db.Model(&userGorm).Where("id = ?", id).Updates(&userGorm)
+
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	return nil
+}
 
 // DeleteById implements user.RepositoryEntities
 // func (*userRepository) DeleteById(id int) error {
-// 	panic("unimplemented")
-// }
-
-// // GetAll implements user.RepositoryEntities
-// func (*userRepository) GetAll() (data []user.CoreUser, err error) {
 // 	panic("unimplemented")
 // }
 
@@ -66,7 +78,4 @@ func (repo *userRepository) GetAll() (data []user.CoreUser, err error) {
 // 	panic("unimplemented")
 // }
 
-// // Update implements user.RepositoryEntities
-// func (*userRepository) Update(id int, input user.CoreUser) error {
-// 	panic("unimplemented")
-// }
+// Update implements user.RepositoryEntities
