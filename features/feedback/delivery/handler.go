@@ -1,16 +1,22 @@
 package delivery
 
-// type FeedbackDelivery struct {
-// 	feedbackServices feedback.ServiceInterface
-// }
+import (
+	"be13/project/features/feedback"
 
-// func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
-// 	handler := &FeedbackDelivery{
-// 		feedbackServices: service,
-// 	}
+	"github.com/Labstack/echo"
+)
 
-// 	e.POST("/feedback", handler.AddClass)
-// 	e.PUT("/feedback", handler.UpdateClass)
-// 	e.DELETE("feedback", handler.DeleteClass)
+type FeedbackDelivery struct {
+	feedbackServices feedback.ServiceInterface
+}
 
-// }
+func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
+	handler := &FeedbackDelivery{
+		feedbackServices: service,
+	}
+
+	e.POST("/feedback", handler.AddClass)
+	e.PUT("/feedback", handler.UpdateClass)
+	e.DELETE("feedback", handler.DeleteClass)
+
+}
