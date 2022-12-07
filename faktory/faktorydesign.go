@@ -7,6 +7,9 @@ import (
 	deliveryClass "be13/project/features/class/delivery"
 	repoClass "be13/project/features/class/repository"
 	serviceClass "be13/project/features/class/service"
+	deliveryFeedback "be13/project/features/feedback/delivery"
+	repoFeedback "be13/project/features/feedback/repository"
+	serviceFeedback "be13/project/features/feedback/service"
 	deliveryMentee "be13/project/features/mentee/delivery"
 	repoMentee "be13/project/features/mentee/repository"
 	serviceMentee "be13/project/features/mentee/service"
@@ -34,5 +37,9 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	menteeRepoFactory := repoMentee.NewMentee(db)
 	menteeServiceFactory := serviceMentee.NewMentee(menteeRepoFactory)
 	deliveryMentee.NewMentee(menteeServiceFactory, e)
+
+	feedbackRepoFactory := repoFeedback.NewFeedback(db)
+	feedbackServiceFactory := serviceFeedback.NewFeedback(feedbackRepoFactory)
+	deliveryFeedback.NewFeedback(feedbackServiceFactory, e)
 
 }

@@ -46,12 +46,12 @@ func (delivery *MenteeDelivery) GetMentebyParam(c echo.Context) error {
 	// 	return c.JSON(http.StatusBadRequest, helper.FailedResponse("error Convert"))
 	// }
 	name := c.QueryParam("name")
-	status := c.QueryParam("status")
-	category := c.QueryParam("category")
-	class := c.QueryParam("class")
-	classId, _ := strconv.Atoi(class)
+	// status := c.QueryParam("status")
+	// category := c.QueryParam("category")
+	// class := c.QueryParam("class")
+	// classId, _ := strconv.Atoi(class)
 
-	userId, err := delivery.menteeServices.GetMentebyParam(name, status, category, uint(classId))
+	userId, err := delivery.menteeServices.GetMentebyParam(name)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Id not Found"))
 	}

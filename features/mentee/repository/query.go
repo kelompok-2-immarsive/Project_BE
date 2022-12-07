@@ -62,9 +62,9 @@ func (repo *menteeRepository) GetAllmentee() (data []mentee.Core, err error) {
 }
 
 // GetMentebyParam implements mentee.RepositoryInterface
-func (repo *menteeRepository) GetMentebyParam(name string, status string, category string, class uint) ([]mentee.Core, error) {
+func (repo *menteeRepository) GetMentebyParam(name string) ([]mentee.Core, error) {
 	var mentees []Mentee
-	tx := repo.db.Where("name=?", name).Or("class_id=?", class).Or("mantee_status=?", status).Or("category=?", category).Find(&mentees)
+	tx := repo.db.Where("name=?", name).Find(&mentees)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
