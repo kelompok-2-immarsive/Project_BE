@@ -21,6 +21,7 @@ func NewMentee(service mentee.ServiceInterface, e *echo.Echo) {
 	e.POST("/mentees", handler.AddMentee)
 	e.GET("/mentees", handler.GetAllmentee)
 	e.GET("/mentee", handler.GetMentebyParam)
+	e.GET("/mentee/:id/feedback", handler.GetMenteeFeedback)
 	e.PUT("/mentees/:id", handler.UpdateMentee)
 	e.DELETE("/mentees/:id", handler.DeleteMentee)
 
@@ -114,5 +115,27 @@ func (delivery *MenteeDelivery) DeleteMentee(c echo.Context) error {
 	result := coreToResponse(data)
 
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("Success Delete Mentee", result))
+
+}
+
+func (delivery *MenteeDelivery) GetMenteeFeedback(c echo.Context) error {
+	idParam := c.Param("id")
+	id, errconv := strconv.Atoi(idParam)
+	if errconv != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error Convert"))
+	}
+	// name := c.QueryParam("name")
+	// status := c.QueryParam("status")
+	// category := c.QueryParam("category")
+	// class := c.QueryParam("class")
+	// classId, _ := strconv.Atoi(class)
+
+	userId, err := delivery.menteeServices.GetMenteeFeedback(uint(id))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Id not Found"))
+	}
+
+	result := coreToResponse(userId)
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("Success Get mentee", result))
 
 }

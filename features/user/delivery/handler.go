@@ -29,11 +29,11 @@ func New(Service user.ServiceEntities, e *echo.Echo) {
 }
 func (delivery *UserDeliv) Create(c echo.Context) error {
 
-	roletoken := middlewares.ExtractTokenUserRole(c)
-	log.Println("Role Token", roletoken)
-	if roletoken != "admin" {
-		return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
-	}
+	// roletoken := middlewares.ExtractTokenUserRole(c)
+	// log.Println("Role Token", roletoken)
+	// if roletoken != "admin" {
+	// 	return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
+	// }
 
 	Inputuser := UserRequest{} //penangkapan data user reques dari entities user
 	errbind := c.Bind(&Inputuser)

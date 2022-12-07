@@ -3,7 +3,6 @@ package mysql
 import (
 	"be13/project/config"
 	class "be13/project/features/class/repository"
-	_feedback "be13/project/features/feedback/repository"
 	mentee "be13/project/features/mentee/repository"
 	user "be13/project/features/user/repository"
 	"fmt"
@@ -29,5 +28,5 @@ func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&user.User{})
 	db.AutoMigrate(&class.Class{})
 	db.AutoMigrate(&mentee.Mentee{})
-	db.AutoMigrate(&_feedback.Feedback{})
+	// db.AutoMigrate(&_feedback.Feedback{})
 }

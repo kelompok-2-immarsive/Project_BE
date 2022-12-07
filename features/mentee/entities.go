@@ -1,6 +1,9 @@
 package mentee
 
-import "time"
+import (
+	"be13/project/features/feedback"
+	"time"
+)
 
 type Core struct {
 	ID                uint
@@ -21,6 +24,7 @@ type Core struct {
 	ClassID           uint   `validate:"required"`
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
+	Feedbacks         []feedback.Core
 }
 
 type ServiceInterface interface {
@@ -29,6 +33,7 @@ type ServiceInterface interface {
 	GetMentebyParam(name string) ([]Core, error)
 	DeleteMentee(id int) (Core, error)
 	UpdateMentee(id int, input Core) error
+	GetMenteeFeedback(id uint) (Core, error)
 }
 
 type RepositoryInterface interface {
@@ -37,4 +42,5 @@ type RepositoryInterface interface {
 	GetMentebyParam(name string) ([]Core, error)
 	DeleteMentee(id int) (Core, error)
 	UpdateMentee(id int, input Core) error
+	GetMenteeFeedback(id uint) (Core, error)
 }

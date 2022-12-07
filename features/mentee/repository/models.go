@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"be13/project/features/feedback"
+	"be13/project/features/feedback/repository"
 	"be13/project/features/mentee"
 
 	"gorm.io/gorm"
@@ -23,6 +25,7 @@ type Mentee struct {
 	Major             string
 	Graduate          string
 	ClassID           uint
+	Feedbacks         []repository.Feedback
 }
 
 func CoretoModel(dataCore mentee.Core) Mentee {
@@ -67,6 +70,7 @@ func (dataModel *Mentee) ModeltoCore() mentee.Core {
 		ClassID:           dataModel.ClassID,
 		CreatedAt:         dataModel.CreatedAt,
 		UpdatedAt:         dataModel.UpdatedAt,
+		Feedbacks:         LoadFeedsModeltoCore(dataModel.Feedbacks),
 	}
 
 }
@@ -78,4 +82,13 @@ func toCoreList(models []Mentee) []mentee.Core {
 
 	}
 	return menteeCore
+}
+
+func LoadFeedsModeltoCore(model []repository.Feedback) []feedback.Core {
+	var core []feedback.Core
+	for _, v := range model {
+		core = append(core, v.ModeltoCore())
+	}
+	return core
+
 }
