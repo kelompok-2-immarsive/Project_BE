@@ -51,22 +51,28 @@ func (repo *menteeRepository) DeleteMentee(id int) (mentee.Core, error) {
 }
 
 // GetAllmentee implements mentee.RepositoryInterface
-func (*menteeRepository) GetAllmentee() (data []mentee.Core, err error) {
-	panic("unimplemented")
+func (repo *menteeRepository) GetAllmentee() (data []mentee.Core, err error) {
+	var mentee []Mentee
+	tx := repo.db.Find(&mentee)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	res := toCoreList(mentee) // model to core
+	return res, nil
 }
 
 // GetMentebyParam implements mentee.RepositoryInterface
-func (repo *menteeRepository) GetMentebyParam(name string, status string, category string, class uint) (mentee.Core, error) {
-	mentees := Mentee{}
-	tx := repo.db.Where("name=?", name).Or("class_id=?", class).Or("mantee_status=?", status).Or("category=?", category).Find(&mentees)
+func (repo *menteeRepository) GetMentebyParam(name string) ([]mentee.Core, error) {
+	var mentees []Mentee
+	tx := repo.db.Where("name=?", name).Find(&mentees)
 	if tx.Error != nil {
-		return mentee.Core{}, tx.Error
+		return nil, tx.Error
 	}
 	if tx.RowsAffected == 0 {
-		return mentee.Core{}, errors.New("id not found")
+		return nil, errors.New("id not found")
 
 	}
-	result := mentees.ModeltoCore()
+	result := toCoreList(mentees)
 	return result, nil
 }
 

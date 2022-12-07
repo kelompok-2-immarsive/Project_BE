@@ -26,7 +26,7 @@ type Core struct {
 type ServiceInterface interface {
 	GetAllmentee() (data []Core, err error)
 	AddMentee(input Core) error
-	GetMentebyParam(name, status, category string, class uint) (Core, error)
+	GetMentebyParam(name string) ([]Core, error)
 	DeleteMentee(id int) (Core, error)
 	UpdateMentee(id int, input Core) error
 }
@@ -34,7 +34,7 @@ type ServiceInterface interface {
 type RepositoryInterface interface {
 	GetAllmentee() (data []Core, err error)
 	AddMentee(input Core) error
-	GetMentebyParam(name, status, category string, class uint) (Core, error)
+	GetMentebyParam(name string) ([]Core, error)
 	DeleteMentee(id int) (Core, error)
 	UpdateMentee(id int, input Core) error
 }
