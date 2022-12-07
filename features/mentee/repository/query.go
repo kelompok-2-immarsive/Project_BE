@@ -17,6 +17,22 @@ func NewMentee(db *gorm.DB) mentee.RepositoryInterface {
 	}
 }
 
+// GetMentebFeedback implements mentee.RepositoryInterface
+func (repo *menteeRepository) GetMenteeFeedback(id uint) (mentee.Core, error) {
+	mentees := Mentee{}
+
+	tx := repo.db.First(&mentees, id)
+	if tx.Error != nil {
+		return mentee.Core{}, tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return mentee.Core{}, errors.New("id not found")
+
+	}
+	result := mentees.ModeltoCore()
+	return result, nil
+}
+
 // AddMentee implements mentee.RepositoryInterface
 func (repo *menteeRepository) AddMentee(input mentee.Core) error {
 	menteeGorm := CoretoModel(input)

@@ -28,8 +28,7 @@ func New(repo user.RepositoryEntities) user.ServiceEntities { //dengan kembalian
 // Create implements user.ServiceEntities
 func (service *UserService) Create(input user.CoreUser) (err error) {
 	input.Status = "Active"
-	input.Role = "Mentor"
-
+	// input.Role = "Mentor"
 	if validateERR := service.validate.Struct(input); validateERR != nil {
 		return validateERR
 	}

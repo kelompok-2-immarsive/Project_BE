@@ -19,6 +19,12 @@ func NewMentee(repo mentee.RepositoryInterface) mentee.ServiceInterface {
 	}
 }
 
+// GetMenteeFeedback implements mentee.ServiceInterface
+func (service *menteeService) GetMenteeFeedback(id uint) (mentee.Core, error) {
+	data, err := service.menteeRepository.GetMenteeFeedback(id)
+	return data, err
+}
+
 // AddMentee implements mentee.ServiceInterface
 func (service *menteeService) AddMentee(input mentee.Core) error {
 	err := service.menteeRepository.AddMentee(input)
