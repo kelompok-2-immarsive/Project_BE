@@ -12,7 +12,7 @@ type FeedbackResponse struct {
 	Comment  string `json:"comment"`
 }
 
-func coreToResponse(core feedback.Core) FeedbackResponse {
+func CoreToResponse(core feedback.Core) FeedbackResponse {
 	response := FeedbackResponse{
 		ID:       core.ID,
 		UserID:   core.UserID,
@@ -27,7 +27,7 @@ func coreToResponse(core feedback.Core) FeedbackResponse {
 func responseList(listRes []feedback.Core) []FeedbackResponse {
 	var feedList []FeedbackResponse
 	for _, v := range listRes {
-		feedList = append(feedList, coreToResponse(v))
+		feedList = append(feedList, CoreToResponse(v))
 
 	}
 	return feedList

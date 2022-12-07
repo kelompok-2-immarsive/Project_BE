@@ -1,6 +1,8 @@
 package delivery
 
 import (
+	"be13/project/features/feedback"
+	"be13/project/features/feedback/delivery"
 	"be13/project/features/mentee"
 )
 
@@ -21,6 +23,7 @@ type MenteeResponse struct {
 	Major             string `json:"major"`
 	Graduate          string `json:"graduate"`
 	ClassID           uint   `json:"class_id"`
+	// Feedbacks         []delivery.FeedbackResponse
 }
 
 func coreToResponse(core mentee.Core) MenteeResponse {
@@ -41,6 +44,7 @@ func coreToResponse(core mentee.Core) MenteeResponse {
 		Major:             core.Major,
 		Graduate:          core.Graduate,
 		ClassID:           core.ClassID,
+		// Feedbacks:         LoadFeedsCoretoResponse(core.Feedbacks),
 	}
 	return response
 
@@ -53,5 +57,14 @@ func responseList(listRes []mentee.Core) []MenteeResponse {
 
 	}
 	return classList
+
+}
+
+func LoadFeedsCoretoResponse(core []feedback.Core) []delivery.FeedbackResponse {
+	var response []delivery.FeedbackResponse
+	for _, v := range core {
+		response = append(response, delivery.CoreToResponse(v))
+	}
+	return response
 
 }

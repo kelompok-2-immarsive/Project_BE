@@ -28,12 +28,11 @@ func New(repo user.RepositoryEntities) user.ServiceEntities { //dengan kembalian
 // Create implements user.ServiceEntities
 func (service *UserService) Create(input user.CoreUser) (err error) {
 	input.Status = "Active"
-	input.Role = "Mentor"
-
+	// input.Role = "Mentor"
 	if validateERR := service.validate.Struct(input); validateERR != nil {
 		return validateERR
 	}
-	input.Password = user.Bcript(input.Password)
+
 	_, errCreate := service.userRepository.Create(input)
 	if errCreate != nil {
 		return errors.New("GAGAL MENAMBAH DATA , QUERY ERROR")
