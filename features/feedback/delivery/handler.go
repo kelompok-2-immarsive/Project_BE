@@ -2,8 +2,18 @@ package delivery
 
 import (
 	"be13/project/features/feedback"
+<<<<<<< HEAD
 	"be13/project/helper"
 	"net/http"
+=======
+
+	"github.com/Labstack/echo"
+)
+
+// type FeedbackDelivery struct {
+// 	feedbackServices feedback.ServiceInterface
+// }
+>>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
 
 	"github.com/labstack/echo/v4"
 )
@@ -17,6 +27,7 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 		feedbackServices: service,
 	}
 
+<<<<<<< HEAD
 	e.POST("/feedback", handler.Addfeedback)
 	// e.PUT("/feedback", handler.Updatefeeback)
 	// e.DELETE("feedback", handler.Deletefeedback)
@@ -44,3 +55,10 @@ func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("berhasil create user"))
 }
+=======
+	e.POST("/feedback", handler.AddClass)
+	e.PUT("/feedback", handler.UpdateClass)
+	e.DELETE("feedback", handler.DeleteClass)
+
+}
+>>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
