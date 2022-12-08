@@ -4,10 +4,7 @@ import (
 	"be13/project/features/feedback"
 	"be13/project/helper"
 	"net/http"
-<<<<<<< HEAD
 	"strconv"
-=======
->>>>>>> f5f3b170ade5fc349a8f0d809c1c45ca45350fae
 
 	"github.com/labstack/echo/v4"
 )
@@ -45,14 +42,8 @@ func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("berhasil create user"))
 }
-<<<<<<< HEAD
 func (delivery *FeedbackDelivery) Updatefeedback(c echo.Context) error {
 
-	// roletoken := middlewares.ExtractTokenUserRole(c)
-	// log.Println("Role Token", roletoken)
-	// if roletoken != "admin" {
-	// 	return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
-	// }
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	userInput := FeedbackRequest{}
@@ -68,5 +59,3 @@ func (delivery *FeedbackDelivery) Updatefeedback(c echo.Context) error {
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("success Update data"))
 }
-=======
->>>>>>> f5f3b170ade5fc349a8f0d809c1c45ca45350fae
