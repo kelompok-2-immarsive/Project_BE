@@ -30,8 +30,9 @@ func (service *feedbackService) AddFeedback(input feedback.Core) error {
 }
 
 // DeleteFeedback implements feedback.ServiceInterface
-func (*feedbackService) DeleteFeedback(id int) (feedback.Core, error) {
-	panic("unimplemented")
+func (service *feedbackService) DeleteFeedback(id int) error {
+	data := service.feedbackRepository.DeleteFeedback(id) // memanggil struct entities repository yang ada di entities yang berisi coding logic
+	return data
 }
 
 // UpdateFeedback implements feedback.ServiceInterface
