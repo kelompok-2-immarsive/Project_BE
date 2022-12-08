@@ -19,16 +19,21 @@ func NewFeedback(repo feedback.RepositoryInterface) feedback.ServiceInterface {
 }
 
 // AddFeedback implements feedback.ServiceInterface
-func (*feedbackService) AddFeedback(input feedback.Core) error {
-	panic("unimplemented")
+func (service *feedbackService) AddFeedback(input feedback.Core) error {
+	errCreate := service.feedbackRepository.AddFeedback(input)
+	if errCreate != nil {
+		return errCreate
+	}
+
+	return nil
 }
 
 // DeleteFeedback implements feedback.ServiceInterface
-func (*feedbackService) DeleteFeedback(id int) (feedback.Core, error) {
-	panic("unimplemented")
-}
+// func (*feedbackService) DeleteFeedback(id int) (feedback.Core, error) {
+// 	panic("unimplemented")
+// }
 
-// UpdateFeedback implements feedback.ServiceInterface
-func (*feedbackService) UpdateFeedback(id int, input feedback.Core) error {
-	panic("unimplemented")
-}
+// // UpdateFeedback implements feedback.ServiceInterface
+// func (*feedbackService) UpdateFeedback(id int, input feedback.Core) error {
+// 	panic("unimplemented")
+// }

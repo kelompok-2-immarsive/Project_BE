@@ -4,7 +4,6 @@ package delivery
 import (
 	"be13/project/features/user"
 	"be13/project/helper"
-	"be13/project/middlewares"
 	"net/http"
 	"strconv"
 
@@ -21,9 +20,9 @@ func New(Service user.ServiceEntities, e *echo.Echo) {
 	}
 	// e.GET("/user", handler.GetAll) // memanggil func getall
 	e.POST("/user", handler.Create)
-	e.GET("/user", handler.GetAll, middlewares.JWTMiddleware())
+	e.GET("/user", handler.GetAll)
 	e.PUT("/user/:id", handler.Update)
-	// e.POST("/auth", handler.Login)
+	e.DELETE("/user/:id", handler.DeleteById)
 	// e.PUT("/user/:id", handler.Update)
 	// e.GET("/user/:id", handler.GetById)
 	// e.DELETE("/user/:id", handler.DeleteById)
@@ -84,4 +83,14 @@ func (delivery *UserDeliv) Update(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.PesanGagalHelper("Failed update data"+err.Error()))
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("success Update data"))
+}
+func (delivery *UserDeliv) DeleteById(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	del, err := delivery.UserService.DeleteById(id) //memanggil fungsi service yang ada di folder service
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("erorr Hapus data"))
+	}
+	result := UserCoreToUserRespon(del)
+	return c.JSON(http.StatusOK, helper.PesanDataBerhasilHelper("berhasil menghapus user", result))
 }

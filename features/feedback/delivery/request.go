@@ -21,3 +21,12 @@ func (req *FeedbackRequest) reqToCore() feedback.Core {
 	}
 
 }
+
+func FeedbackRequestToUserCore(data FeedbackRequest) feedback.Core {
+	return feedback.Core{
+		UserID:   data.UserID,
+		Status:   data.Status,
+		MenteeID: data.MenteeID,
+		Comment:  data.Comment,
+	}
+}
