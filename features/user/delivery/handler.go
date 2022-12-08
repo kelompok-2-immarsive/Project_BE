@@ -4,10 +4,6 @@ package delivery
 import (
 	"be13/project/features/user"
 	"be13/project/helper"
-<<<<<<< HEAD
-=======
-	"be13/project/middlewares"
->>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
 	"net/http"
 	"strconv"
 
@@ -24,15 +20,9 @@ func New(Service user.ServiceEntities, e *echo.Echo) {
 	}
 	// e.GET("/user", handler.GetAll) // memanggil func getall
 	e.POST("/user", handler.Create)
-<<<<<<< HEAD
 	e.GET("/user", handler.GetAll)
 	e.PUT("/user/:id", handler.Update)
 	e.DELETE("/user/:id", handler.DeleteById)
-=======
-	e.GET("/user", handler.GetAll, middlewares.JWTMiddleware())
-	e.PUT("/user/:id", handler.Update)
-	// e.POST("/auth", handler.Login)
->>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
 	// e.PUT("/user/:id", handler.Update)
 	// e.GET("/user/:id", handler.GetById)
 	// e.DELETE("/user/:id", handler.DeleteById)
