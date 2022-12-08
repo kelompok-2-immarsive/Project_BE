@@ -25,6 +25,7 @@ type ServiceEntities interface { //sebagai contract yang dibuat di layer service
 
 	Update(id int, input CoreUser) error
 	// GetById(id int) (data CoreUser, err error)
+	// GetById(id int) (data CoreUser, err error)
 	DeleteById(id int) (CoreUser, error)
 }
 
