@@ -30,11 +30,19 @@ func (repo *feedbackRepository) AddFeedback(input feedback.Core) error {
 }
 
 // DeleteFeedback implements feedback.RepositoryInterface
-// func (*feedbackRepository) DeleteFeedback(id int) (feedback.Core, error) {
-// 	panic("unimplemented")
-// }
+func (*feedbackRepository) DeleteFeedback(id int) (feedback.Core, error) {
+	panic("unimplemented")
+}
 
 // // UpdateFeedback implements feedback.RepositoryInterface
-// func (*feedbackRepository) UpdateFeedback(id int, input feedback.Core) error {
-// 	panic("unimplemented")
-// }
+func (repo *feedbackRepository) UpdateFeedback(id int, input feedback.Core) error {
+	feedGorm := FromUserCore(input)
+
+	tx := repo.db.Model(&feedGorm).Where("id = ?", id).Updates(&feedGorm)
+
+	if tx.Error != nil {
+		return tx.Error
+	}
+
+	return nil
+}
