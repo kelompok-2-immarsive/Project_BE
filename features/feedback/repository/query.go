@@ -2,6 +2,7 @@ package repository
 
 import (
 	"be13/project/features/feedback"
+	"errors"
 
 	"gorm.io/gorm"
 )
@@ -14,6 +15,32 @@ func NewFeedback(db *gorm.DB) feedback.RepositoryInterface {
 	return &feedbackRepository{
 		db: db,
 	}
+}
+
+// GetAllFeeds implements feedback.RepositoryInterface
+func (repo *feedbackRepository) GetAllFeeds() (data []feedback.Core, err error) {
+	var feeds []Feedback
+	tx := repo.db.Find(&feeds)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	res := toCoreList(feeds) // model to core
+	return res, nil
+}
+
+// GetFeedbyId implements feedback.RepositoryInterface
+func (repo *feedbackRepository) GetFeedbyId(id int) (feedback.Core, error) {
+	feeds := Feedback{}
+	tx := repo.db.First(&feeds, id)
+	if tx.Error != nil {
+		return feedback.Core{}, tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return feedback.Core{}, errors.New("id not found")
+
+	}
+	result := feeds.ModeltoCore()
+	return result, nil
 }
 
 // AddFeedback implements feedback.RepositoryInterface

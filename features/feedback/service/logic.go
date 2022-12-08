@@ -19,6 +19,21 @@ func NewFeedback(repo feedback.RepositoryInterface) feedback.ServiceInterface {
 	}
 }
 
+// GetAllFeeds implements feedback.ServiceInterface
+func (service *feedbackService) GetAllFeeds() (data []feedback.Core, err error) {
+	data, err = service.feedbackRepository.GetAllFeeds()
+	return data, err
+}
+
+// GetFeedbyId implements feedback.ServiceInterface
+func (service *feedbackService) GetFeedbyId(id int) (feedback.Core, error) {
+	data, errData := service.feedbackRepository.GetFeedbyId(id)
+	if errData != nil {
+		return feedback.Core{}, errors.New("error get id")
+	}
+	return data, nil
+}
+
 // AddFeedback implements feedback.ServiceInterface
 func (service *feedbackService) AddFeedback(input feedback.Core) error {
 	errCreate := service.feedbackRepository.AddFeedback(input)

@@ -32,7 +32,7 @@ func (delivery *MenteeDelivery) GetAllmentee(c echo.Context) error {
 	// name := c.QueryParam("name")
 	result, err := delivery.menteeServices.GetAllmentee()
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Data Users is empty"))
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Data mentee is empty"))
 	}
 	data := responseList(result)
 
@@ -54,7 +54,7 @@ func (delivery *MenteeDelivery) GetMentebyParam(c echo.Context) error {
 
 	userId, err := delivery.menteeServices.GetMentebyParam(name)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Id not Found"))
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("mentee name not Found"))
 	}
 
 	result := responseList(userId)
@@ -74,7 +74,7 @@ func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
 
 	err := delivery.menteeServices.AddMentee(result)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error insert into database"))
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error insert into database"+err.Error()))
 	}
 	return c.JSON(http.StatusOK, helper.SuccessResponse("Success Add Mantee"))
 
@@ -96,7 +96,7 @@ func (delivery *MenteeDelivery) UpdateMentee(c echo.Context) error {
 	result := mentee.reqToCore()
 	err := delivery.menteeServices.UpdateMentee(id, result)
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error Update"))
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Update Failed"))
 	}
 	return c.JSON(http.StatusOK, helper.SuccessResponse("Success Update"))
 
