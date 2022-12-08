@@ -2,7 +2,6 @@ package service
 
 import (
 	"be13/project/features/feedback"
-	"errors"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -30,16 +29,11 @@ func (service *feedbackService) AddFeedback(input feedback.Core) error {
 }
 
 // DeleteFeedback implements feedback.ServiceInterface
-func (*feedbackService) DeleteFeedback(id int) (feedback.Core, error) {
-	panic("unimplemented")
-}
+// func (*feedbackService) DeleteFeedback(id int) (feedback.Core, error) {
+// 	panic("unimplemented")
+// }
 
-// UpdateFeedback implements feedback.ServiceInterface
-func (service *feedbackService) UpdateFeedback(id int, input feedback.Core) error {
-	errUpdate := service.feedbackRepository.UpdateFeedback(id, input)
-	if errUpdate != nil {
-		return errors.New("GAGAL mengupdate data , QUERY ERROR")
-	}
-
-	return nil
-}
+// // UpdateFeedback implements feedback.ServiceInterface
+// func (*feedbackService) UpdateFeedback(id int, input feedback.Core) error {
+// 	panic("unimplemented")
+// }
