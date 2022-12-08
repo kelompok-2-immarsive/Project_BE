@@ -20,7 +20,7 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 
 	e.POST("/feedback", handler.Addfeedback)
 	e.PUT("/feedback", handler.Updatefeedback)
-	// e.DELETE("feedback", handler.Deletefeedback)
+	e.DELETE("feedback", handler.Deletefeedback)
 
 }
 
@@ -58,4 +58,15 @@ func (delivery *FeedbackDelivery) Updatefeedback(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.PesanGagalHelper("Failed update data"+err.Error()))
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("success Update data"))
+}
+
+func (delivery *FeedbackDelivery) Deletefeedback(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	result := delivery.feedbackServices.DeleteFeedback(id) //memanggil fungsi service yang ada di folder service
+
+	if result != nil {
+		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("erorr read data"))
+	}
+
+	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("success Hapus data"))
 }
