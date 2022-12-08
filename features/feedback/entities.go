@@ -16,14 +16,14 @@ type ServiceInterface interface {
 	// GetAllClass() (data []Core, err error)
 	AddFeedback(input Core) error
 	// GetClassbyId(name string) (Core, error)
-	// DeleteFeedback(id int) (Core, error)
-	// UpdateFeedback(id int, input Core) error
+	DeleteFeedback(id int) (Core, error)
+	UpdateFeedback(id int, input Core) error
 }
 
 type RepositoryInterface interface {
 	// GetAllClass() (data []Core, err error)
 	AddFeedback(input Core) error
 	// GetClassbyId(name string) (Core, error)
-	// DeleteFeedback(id int) (Core, error)
-	// UpdateFeedback(id int, input Core) error
+	DeleteFeedback(id int) (Core, error)
+	UpdateFeedback(id int, input Core) error
 }

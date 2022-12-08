@@ -2,21 +2,9 @@ package delivery
 
 import (
 	"be13/project/features/feedback"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	"be13/project/helper"
 	"net/http"
->>>>>>> 7d9664f386dd17ed7532bbb8e767f91dd7a73132
-=======
-
-	"github.com/Labstack/echo"
-)
-
-// type FeedbackDelivery struct {
-// 	feedbackServices feedback.ServiceInterface
-// }
->>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -30,7 +18,6 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 		feedbackServices: service,
 	}
 
-<<<<<<< HEAD
 	e.POST("/feedback", handler.Addfeedback)
 	// e.PUT("/feedback", handler.Updatefeeback)
 	// e.DELETE("feedback", handler.Deletefeedback)
@@ -40,9 +27,6 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 
 	// roletoken := middlewares.ExtractTokenUserRole(c)
-	// log.Println("Role Token", roletoken)
-	// if roletoken != "admin" {
-	// 	return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
 	// }
 
 	InputFeedback := FeedbackRequest{}
@@ -58,10 +42,25 @@ func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("berhasil create user"))
 }
-=======
-	e.POST("/feedback", handler.AddClass)
-	e.PUT("/feedback", handler.UpdateClass)
-	e.DELETE("feedback", handler.DeleteClass)
+func (delivery *FeedbackDelivery) Updatefeed(c echo.Context) error {
 
+	// roletoken := middlewares.ExtractTokenUserRole(c)
+	// log.Println("Role Token", roletoken)
+	// if roletoken != "admin" {
+	// 	return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
+	// }
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	userInput := FeedbackRequest{}
+	errBind := c.Bind(&userInput) // menangkap data yg dikirim dari req body dan disimpan ke variabel
+	if errBind != nil {
+		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("Error binding data "+errBind.Error()))
+	}
+
+	dataCore := FeedbackRequestToUserCore(userInput)
+	err := delivery.feedbackServices.UpdateFeedback(id, dataCore)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.PesanGagalHelper("Failed update data"+err.Error()))
+	}
+	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("success Update data"))
 }
->>>>>>> 23fa500802f7aea9bfdb62ea0d177425fa25d06b
