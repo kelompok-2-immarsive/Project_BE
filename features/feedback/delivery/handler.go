@@ -20,7 +20,7 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 
 	e.POST("/feedback", handler.Addfeedback)
 	e.PUT("/feedback", handler.Updatefeedback)
-	e.DELETE("feedback", handler.Deletefeedback)
+	e.DELETE("/feedback/:id", handler.Deletefeedback)
 
 }
 
