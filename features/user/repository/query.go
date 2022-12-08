@@ -71,14 +71,27 @@ func (repo *userRepository) Update(id int, input user.CoreUser) error {
 
 // DeleteById implements user.RepositoryEntities
 func (repo *userRepository) DeleteById(id int) (user.CoreUser, error) {
+
+	// userGorm :=
+
+	// userGorm.Status = "Deactivated"
+	// tx := repo.db.Model(&userGorm).Where("id = ?", id).Updates(&userGorm)
+
+	// if tx.Error != nil {
+	// 	return user.CoreUser{}, tx.Error
+	// }
+	//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////
 	users := User{}
-	if users.DeletedAt.Time != (time.Time{}) {
-		users.Status = "Active"
-	} else {
-		users.Status = "delete"
-	}
-	tx := repo.db.Delete(&users, id)
+	users.Status = "Deactivated"
+	tx := repo.db.Model(&users).Where("id = ?", id).Updates(&users)
+
 	if tx.Error != nil {
+		return user.CoreUser{}, tx.Error
+	}
+
+	tx1 := repo.db.Delete(&users, id)
+	if tx1.Error != nil {
 		return user.CoreUser{}, tx.Error
 	}
 
