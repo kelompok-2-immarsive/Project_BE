@@ -2,7 +2,9 @@ package delivery
 
 import (
 	"be13/project/features/mentee"
+	"be13/project/middlewares"
 	"be13/project/utils/helper"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -18,12 +20,12 @@ func NewMentee(service mentee.ServiceInterface, e *echo.Echo) {
 		menteeServices: service,
 	}
 
-	e.POST("/mentees", handler.AddMentee)
-	e.GET("/mentees", handler.GetAllmentee)
-	e.GET("/mentee", handler.GetMentebyParam)
-	e.GET("/mentee/:id/feedback", handler.GetMenteeFeedback)
-	e.PUT("/mentees/:id", handler.UpdateMentee)
-	e.DELETE("/mentees/:id", handler.DeleteMentee)
+	e.POST("/mentees", handler.AddMentee, middlewares.JWTMiddleware())
+	e.GET("/mentees", handler.GetAllmentee, middlewares.JWTMiddleware())
+	e.GET("/mentee", handler.GetMentebyParam, middlewares.JWTMiddleware())
+	e.GET("/mentee/:id/feedback", handler.GetMenteeFeedback, middlewares.JWTMiddleware())
+	e.PUT("/mentees/:id", handler.UpdateMentee, middlewares.JWTMiddleware())
+	e.DELETE("/mentees/:id", handler.DeleteMentee, middlewares.JWTMiddleware())
 
 }
 
@@ -102,6 +104,12 @@ func (delivery *MenteeDelivery) UpdateMentee(c echo.Context) error {
 
 }
 func (delivery *MenteeDelivery) DeleteMentee(c echo.Context) error {
+	roletoken := middlewares.ExtractTokenUserRole(c)
+	log.Println("Role Token", roletoken)
+	if roletoken != "admin" {
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("tidak bisa diakses khusus admin!!!"))
+	}
+
 	idParam := c.Param("id")
 	id, errconv := strconv.Atoi(idParam)
 	if errconv != nil {

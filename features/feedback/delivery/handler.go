@@ -3,6 +3,7 @@ package delivery
 import (
 	"be13/project/features/feedback"
 	"be13/project/helper"
+	"be13/project/middlewares"
 	"net/http"
 	"strconv"
 
@@ -18,11 +19,11 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 		feedbackServices: service,
 	}
 
-	e.POST("/feedback", handler.Addfeedback)
-	e.GET("/feedback", handler.GetAllFeeds)
-	e.GET("/feedback/:id", handler.GetFeedbyId)
-	e.PUT("/feedback", handler.Updatefeedback)
-	e.DELETE("/feedback/:id", handler.Deletefeedback)
+	e.POST("/feedback", handler.Addfeedback, middlewares.JWTMiddleware())
+	e.GET("/feedback", handler.GetAllFeeds, middlewares.JWTMiddleware())
+	e.GET("/feedback/:id", handler.GetFeedbyId, middlewares.JWTMiddleware())
+	e.PUT("/feedback", handler.Updatefeedback, middlewares.JWTMiddleware())
+	e.DELETE("/feedback/:id", handler.Deletefeedback, middlewares.JWTMiddleware())
 
 }
 
