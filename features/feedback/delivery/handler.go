@@ -19,6 +19,8 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.POST("/feedback", handler.Addfeedback)
+	e.GET("/feedback", handler.GetAllFeeds)
+	e.GET("/feedback/:id", handler.GetFeedbyId)
 	e.PUT("/feedback", handler.Updatefeedback)
 	e.DELETE("/feedback/:id", handler.Deletefeedback)
 
@@ -69,4 +71,33 @@ func (delivery *FeedbackDelivery) Deletefeedback(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("success Hapus data"))
+}
+
+func (delivery *FeedbackDelivery) GetAllFeeds(c echo.Context) error {
+	result, err := delivery.feedbackServices.GetAllFeeds()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("Data feedback is empty"))
+	}
+	data := responseList(result)
+
+	return c.JSON(http.StatusOK, helper.PesanDataBerhasilHelper("Success Get All Feedbacks", data))
+
+}
+
+func (delivery *FeedbackDelivery) GetFeedbyId(c echo.Context) error {
+	idParam := c.Param("id")
+	id, errconv := strconv.Atoi(idParam)
+	if errconv != nil {
+		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("error Convert"+errconv.Error()))
+	}
+	// name := c.QueryParam("name")
+
+	userId, err := delivery.feedbackServices.GetFeedbyId(id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("fedback id not Found"+err.Error()))
+	}
+
+	result := CoreToResponse(userId)
+	return c.JSON(http.StatusOK, helper.PesanDataBerhasilHelper("Success Get Feedback", result))
+
 }
