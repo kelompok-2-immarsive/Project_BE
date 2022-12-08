@@ -19,7 +19,7 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.POST("/feedback", handler.Addfeedback)
-	// e.PUT("/feedback", handler.Updatefeeback)
+	e.PUT("/feedback", handler.Updatefeedback)
 	// e.DELETE("feedback", handler.Deletefeedback)
 
 }
@@ -42,7 +42,7 @@ func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 	}
 	return c.JSON(http.StatusCreated, helper.PesanSuksesHelper("berhasil create user"))
 }
-func (delivery *FeedbackDelivery) Updatefeed(c echo.Context) error {
+func (delivery *FeedbackDelivery) Updatefeedback(c echo.Context) error {
 
 	// roletoken := middlewares.ExtractTokenUserRole(c)
 	// log.Println("Role Token", roletoken)
