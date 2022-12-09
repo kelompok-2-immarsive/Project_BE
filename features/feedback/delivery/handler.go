@@ -4,6 +4,7 @@ import (
 	"be13/project/features/feedback"
 	"be13/project/helper"
 	"be13/project/middlewares"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -29,8 +30,8 @@ func NewFeedback(service feedback.ServiceInterface, e *echo.Echo) {
 
 func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 
-	// roletoken := middlewares.ExtractTokenUserRole(c)
-	// }
+	useridtoken := middlewares.ExtractTokenUserId(c)
+	log.Println("user Id", useridtoken)
 
 	InputFeedback := FeedbackRequest{}
 	errbind := c.Bind(&InputFeedback)
@@ -38,7 +39,10 @@ func (delivery *FeedbackDelivery) Addfeedback(c echo.Context) error {
 	if errbind != nil {
 		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("erorr read data"+errbind.Error()))
 	}
+	// InputFeedback.UserID=uint(useridtoken)
 	dataCore := FeedbackRequestToUserCore(InputFeedback) //data mapping yang diminta create
+
+	dataCore.UserID = uint(useridtoken)
 	errResultCore := delivery.feedbackServices.AddFeedback(dataCore)
 	if errResultCore != nil {
 		return c.JSON(http.StatusBadRequest, helper.PesanGagalHelper("erorr read data"+errResultCore.Error()))

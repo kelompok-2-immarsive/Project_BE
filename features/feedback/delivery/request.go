@@ -5,7 +5,6 @@ import (
 )
 
 type FeedbackRequest struct {
-	UserID   uint   `json:"user_id" form:"user_id"`
 	Status   string `json:"status" form:"status"`
 	MenteeID uint   `json:"mentee_id" form:"mentee_id"`
 	Comment  string `json:"comment" form:"comment"`
@@ -24,7 +23,7 @@ type FeedbackRequest struct {
 
 func FeedbackRequestToUserCore(data FeedbackRequest) feedback.Core {
 	return feedback.Core{
-		UserID:   data.UserID,
+
 		Status:   data.Status,
 		MenteeID: data.MenteeID,
 		Comment:  data.Comment,

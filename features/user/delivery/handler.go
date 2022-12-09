@@ -32,7 +32,7 @@ func (delivery *UserDeliv) Create(c echo.Context) error {
 
 	roletoken := middlewares.ExtractTokenUserRole(c)
 	log.Println("Role Token", roletoken)
-	if roletoken != "admin" {
+	if roletoken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
 	}
 
@@ -71,7 +71,7 @@ func (delivery *UserDeliv) Update(c echo.Context) error {
 
 	roletoken := middlewares.ExtractTokenUserRole(c)
 	log.Println("Role Token", roletoken)
-	if roletoken != "admin" {
+	if roletoken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -92,7 +92,7 @@ func (delivery *UserDeliv) Update(c echo.Context) error {
 func (delivery *UserDeliv) DeleteById(c echo.Context) error {
 	roletoken := middlewares.ExtractTokenUserRole(c)
 	log.Println("Role Token", roletoken)
-	if roletoken != "admin" {
+	if roletoken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.PesanGagalHelper("tidak bisa diakses khusus admin!!!"))
 	}
 	id, _ := strconv.Atoi(c.Param("id"))
