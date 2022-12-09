@@ -5,7 +5,7 @@ import "time"
 type Core struct {
 	ID        uint
 	Status    string `validate:"required"`
-	UserID    uint   `validate:"required"`
+	UserID    uint
 	MenteeID  uint
 	Comment   string
 	CreatedAt time.Time
